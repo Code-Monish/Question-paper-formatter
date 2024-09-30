@@ -1,0 +1,46 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment folders
+env/
+venv/
+ENV/
+.venv/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+
+# Logs
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Python docx or pdf generated files
+*.docx
+*.pdf
+
+# Unit test / coverage results
+htmlcov/
+*.cover
+.coverage
+*.py,cover
+.hypothesis/
+
+# IDE and Editor settings
+.vscode/
+.idea/
+
+# pipenv and poetry
+Pipfile.lock
+poetry.lock
+
+# Miscellaneous
+*.sqlite3
+*.db
+*.dat
