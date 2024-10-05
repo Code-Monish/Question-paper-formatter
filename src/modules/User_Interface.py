@@ -56,12 +56,19 @@ class QuestionPaperFormatterApp:
         # List of Question Papers
         self.list_of_papers = tk.Listbox(self.hero_section, font=("Arial", 16))
         self.list_of_papers.pack(fill="both", expand=True)
+        
+        # Footer section 
+        self.footer = tk.Frame(self.root, bg="#007bff")
+        self.footer.pack(fill="x")
+        
+        # Quit app button
+        self.quit_app = tk.Button(self.footer, text="Quit App", font=("Arial", 16), command=self.root.destroy)
+        self.quit_app.pack(side="top", padx = 10, pady = 5)
 
     def settings(self):
         # Settings window functionality
         
         pass
-
 
     def create_new_paper(self):
         # Create new paper window functionality
@@ -176,7 +183,7 @@ class QuestionPaperFormatterApp:
         self.prompt_window.destroy()
             
     def segmented_question_paper(self):
-        self.segmented_paper_window = tk.Toplevel(self.prompt_window)
+        self.segmented_paper_window = tk.Toplevel(self.new_paper_window)
         self.segmented_paper_window.state('zoomed')  # Make the window full screen
         self.segmented_paper_window.title("Segmented Question Paper")
 
@@ -249,3 +256,5 @@ if __name__ == "__main__":
     root.geometry("800x600")
     app = QuestionPaperFormatterApp(root)
     root.mainloop()
+    
+# todo : 
