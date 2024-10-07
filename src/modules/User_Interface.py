@@ -179,7 +179,7 @@ class QuestionPaperFormatterApp:
         self.unsegmented_question_paper()
         self.root.after(100, self.destroy_prompt_window)
         
-    def destroy_prompt_window():
+    def destroy_prompt_window(self):
         self.prompt_window.destroy()
             
     def segmented_question_paper(self):
