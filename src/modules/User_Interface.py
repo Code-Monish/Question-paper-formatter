@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk, PhotoImage
 from PIL import Image, ImageTk
+from UI_Questions import QuestionPaperPage
 
 class QuestionPaperFormatterApp:
     def __init__(self, root):
@@ -23,6 +24,9 @@ class QuestionPaperFormatterApp:
         self.settings_icon = tk.Button(self.nav_bar, image=self.settings_image, command=self.settings)
         self.settings_icon.image = self.settings_image  # Keep a reference to the image
         self.settings_icon.pack(side="right", padx=10, pady=10)
+        
+        # Creating a window for question_page.
+        # self.qp_root = tk.Tk()
 
 
         # Hero Section
@@ -145,112 +149,43 @@ class QuestionPaperFormatterApp:
         self.button_frame.pack(pady=20)
 
         # Next Button
-        self.next_button = tk.Button(self.button_frame, text="Next", bg="#007bff", fg="white", font=("Arial", 16), command=self.next_page)
+        self.next_button = tk.Button(self.button_frame, text="Next", bg="#007bff", fg="white", font=("Arial", 16), command=self.open_next_page)
         self.next_button.pack(side="left", padx=10)
 
         # Back to Home Button
         self.back_to_home_button = tk.Button(self.button_frame, text="Back to Home", command=self.new_paper_window.destroy, font=("Arial", 16))
         self.back_to_home_button.pack(side="left", padx=10)
+        
+    def open_next_page(self):
+        self.next_page()
+        self.new_paper_window.destroy()
+        
     
     def next_page(self):
         # Next page functionality
-        self.prompt_window = tk.Toplevel(self.new_paper_window)
+        self.prompt_window = tk.Toplevel(self.root)
         self.prompt_window.geometry("600x200")
         self.prompt_window.resizable(False,False)
         self.prompt_window.iconphoto(False,self.img)
         self.prompt_window.title("Information")
-        
+    
         self.prompt_label = tk.Label(self.prompt_window, text="Do you want to segment your paper into sections?", font=("Arial", 16, "bold"))
         self.prompt_label.pack(pady=20)
-        
+    
         self.prompt_window_btn = tk.Frame(self.prompt_window)
         self.prompt_window_btn.pack(pady=20)
-        
-        self.button_yes = tk.Button(self.prompt_window_btn, text="Yes", font=("Arial", 16))
+    
+        self.button_yes = tk.Button(self.prompt_window_btn, text="Yes", font=("Arial", 16), command=self.open_question_paper_page)
         self.button_yes.pack(side="left", padx=10)
         self.button_no = tk.Button(self.prompt_window_btn, text="No", font=("Arial", 16))
         self.button_no.pack(side="left", padx=10)
-        
-    def open_segmented_page(self):
-        self.segmented_question_paper()
-        self.root.after(100, self.destroy_prompt_window)
 
-    def open_unsegmented_page(self):
-        self.unsegmented_question_paper()
-        self.root.after(100, self.destroy_prompt_window)
-        
-    def destroy_prompt_window(self):
+    def open_question_paper_page(self):
         self.prompt_window.destroy()
-            
-    def segmented_question_paper(self):
-        self.segmented_paper_window = tk.Toplevel(self.new_paper_window)
-        self.segmented_paper_window.state('zoomed')  # Make the window full screen
-        self.segmented_paper_window.title("Segmented Question Paper")
-
-        self.segmented_paper_frame = tk.Frame(self.segmented_paper_window)
-        self.segmented_paper_frame.pack(fill="both", expand=True)
-
-        self.left_column = tk.Frame(self.segmented_paper_frame)
-        self.left_column.pack(side="left", fill="both", expand=True)
-
-        self.right_column = tk.Frame(self.segmented_paper_frame)
-        self.right_column.pack(side="right", fill="y")
-
-        self.section_label = tk.Label(self.left_column, text="Section:", font=("Arial", 16))
-        self.section_label.pack(pady=10)
-
-        self.section_entry_frame = tk.Frame(self.left_column)
-        self.section_entry_frame.pack(pady=10, padx=20)
-
-        self.section_entry = tk.Entry(self.section_entry_frame, font=("Arial", 16))
-        self.section_entry.pack(side="left", padx=10)
-
-        self.add_section_button = tk.Button(self.section_entry_frame, text="Add Section", font=("Arial", 16), command=self.add_section)
-        self.add_section_button.pack(side="left", padx=10)
-
-        self.questions_frame = tk.Frame(self.left_column)
-        self.questions_frame.pack(pady=10, padx=20)
-
-        self.questions_grid = tk.Frame(self.questions_frame)
-        self.questions_grid.pack(fill="both", expand=True)
-
-        self.right_column_frame = tk.Frame(self.right_column)
-        self.right_column_frame.pack(fill="y", padx=20)
-
-        self.marks_label = tk.Label(self.right_column_frame, text="Marks:", font=("Arial", 16))
-        self.marks_label.pack(pady=10)
-
-        self.marks_entry = tk.Entry(self.right_column_frame, font=("Arial", 16))
-        self.marks_entry.pack(pady=10)
-
-        self.cos_label = tk.Label(self.right_column_frame, text="COs:", font=("Arial", 16))
-        self.cos_label.pack(pady=10)
-
-        self.cos_var = tk.StringVar()
-        self.cos_combobox = ttk.Combobox(self.right_column_frame, textvariable=self.cos_var)
-        self.cos_combobox['values'] = ['CO1', 'CO2', 'CO3', 'CO4']
-        self.cos_combobox.pack(pady=10)
-
-        self.btl_label = tk.Label(self.right_column_frame, text="BTLs:", font=("Arial", 16))
-        self.btl_label.pack(pady=10)
-
-        self.btl_var = tk.StringVar()
-        self.btl_combobox = ttk.Combobox(self.right_column_frame, textvariable=self.btl_var)
-        self.btl_combobox['values'] = ['BTL1', 'BTL2', 'BTL3', 'BTL4']
-        self.btl_combobox.pack(pady=10)
-    
-    def unsegmented_question_paper(self):
-        pass
+        self.question_paper_window = tk.Toplevel(self.root)
+        self.question_paper_window.title("Question Paper")
+        self.question_paper_page = QuestionPaperPage(self.question_paper_window)
         
-    def add_section(self):
-        # Add section functionality
-        pass
-
-    def add_question(self):
-        # Add question functionality
-        pass
-
-
 if __name__ == "__main__":
     root = tk.Tk()
     root.geometry("800x600")
