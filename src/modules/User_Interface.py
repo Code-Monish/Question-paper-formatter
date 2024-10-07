@@ -166,9 +166,9 @@ class QuestionPaperFormatterApp:
         self.prompt_window_btn = tk.Frame(self.prompt_window)
         self.prompt_window_btn.pack(pady=20)
         
-        self.button_yes = tk.Button(self.prompt_window_btn, text="Yes", font=("Arial", 16), command=self.open_segmented_page)
+        self.button_yes = tk.Button(self.prompt_window_btn, text="Yes", font=("Arial", 16))
         self.button_yes.pack(side="left", padx=10)
-        self.button_no = tk.Button(self.prompt_window_btn, text="No", font=("Arial", 16), command=self.open_unsegmented_page)
+        self.button_no = tk.Button(self.prompt_window_btn, text="No", font=("Arial", 16))
         self.button_no.pack(side="left", padx=10)
         
     def open_segmented_page(self):
@@ -257,4 +257,4 @@ if __name__ == "__main__":
     app = QuestionPaperFormatterApp(root)
     root.mainloop()
     
-# todo : 
+# todo : make a the question paper page.
