@@ -1,10 +1,6 @@
 """This script will generate questions and it's meta data"""
 
-QUESTION_BANK = {}
-WEIGHT_SUM = 0
-
-def QuestionAdd():
-    print(QUESTION_BANK)
+def QuestionAdd(question_set,question_number):
     question = input("Enter the question here: ")
     question_weight = int(input("Enter the mark it holds: "))
     question_BTL = input("Enter BLT: ")
@@ -15,10 +11,6 @@ def QuestionAdd():
                           "BTL":question_BTL,
                           "CO":question_CO}
     
-    if len(QUESTION_BANK) == 0:
-        pass
-    else:
-        QUESTION_BANK.update(question_input)
-        
-        
-    return QUESTION_BANK
+    question_set[question_number] = question_input
+    
+    return question_set
