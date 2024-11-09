@@ -16,6 +16,10 @@ class DataChecker:
 
     @staticmethod
     def print_top_5_rows(cursor, table_name):
+        cursor.execute(f"PRAGMA table_info({table_name});")
+        columns = [info[1] for info in cursor.fetchall()]
+        print(f"Column names for table {table_name}: {', '.join(columns)}")
+
         cursor.execute(f"SELECT * FROM {table_name} LIMIT 5;")
         rows = cursor.fetchall()
         print(f"Top 5 rows from table {table_name}:")
@@ -33,5 +37,5 @@ def main():
 
     conn.close()
 
-# if __name__ == "__main__":
-#     main()
+if __name__ == "__main__":
+    main()

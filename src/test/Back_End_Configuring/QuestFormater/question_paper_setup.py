@@ -32,12 +32,12 @@ def QuestionPaperSetup():
     """)
 
     # Select all data from the temporary table
-    # cursor.execute("""
-    #     SELECT * FROM CourseDummy
-    # """)
+    cursor.execute("""
+        SELECT * FROM CourseDummy
+    """)
 
-    # # Fetch the results if needed
-    # results = cursor.fetchall()
+    # Fetch the results if needed
+    results = cursor.fetchall()
     # print(results)
 
     # Drop the temporary table
