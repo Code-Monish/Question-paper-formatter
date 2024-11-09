@@ -37,7 +37,7 @@ def main():
 
     print("Duplicate course outcomes removed.")
 
-    cursor.execute("DROP TABLE Question")
+    cursor.execute("DROP TABLE Questions")
     conn.commit()
     conn.close()
 
