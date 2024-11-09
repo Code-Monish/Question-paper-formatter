@@ -75,13 +75,6 @@ class LeftFrame(customtkinter.CTkFrame):
         )
         self.create_paper_button.grid(row=4, column=0, columnspan=2, padx=10, pady=(20, 10))
 
-        # # Create Paper Button
-        # self.create_paper_button = customtkinter.CTkButton(
-        #     self, text="Create Paper", font=("Arial", 14), corner_radius=10,
-        #     command=self.open_toplevel
-        # )
-        # self.create_paper_button.grid(row=4, column=0, columnspan=2, padx=10, pady=(20, 10))
-
         # Configure grid layout for spacing
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)
@@ -95,6 +88,9 @@ class ToplevelWindow(customtkinter.CTkToplevel):
         
         # Iconify (minimize) the main application window
         master.iconify()
+
+        # Initialize question count
+        self.question_count = 0
 
         # Configure layout
         self.grid_rowconfigure(0, weight=1)
@@ -136,24 +132,27 @@ class ToplevelWindow(customtkinter.CTkToplevel):
         self.scrollable_frame = customtkinter.CTkFrame(canvas)
         canvas.create_window((0, 0), window=self.scrollable_frame, anchor="nw")
 
-        # Add the 'Add Question' button
-        add_question_button = customtkinter.CTkButton(
-            self.scrollable_frame, text="Add Question", command=self.add_question
-        )
-        add_question_button.grid(row=0, column=0, padx=10, pady=10)
-
         # Update the scrollable area when new questions are added
         self.scrollable_frame.bind(
             "<Configure>", lambda event, canvas=canvas: canvas.configure(scrollregion=canvas.bbox("all"))
         )
 
-    def add_question(self):
-        # Determine the row where the new question frame should be added
-        row = len(self.scrollable_frame.grid_slaves())
+        # Add the 'Add Question' button
+        self.add_question_button = customtkinter.CTkButton(
+            self.scrollable_frame, text="Add Question", command=self.show_question_input
+        )
+        self.add_question_button.grid(row=self.question_count, column=0, padx=10, pady=10)
+
+    def show_question_input(self):
+        # Hide the 'Add Question' button
+        self.add_question_button.grid_forget()
+
+        # Increment question count
+        self.question_count += 1
 
         # Create the child frame for the question
         child_frame = customtkinter.CTkFrame(self.scrollable_frame)
-        child_frame.grid(row=row, column=0, pady=(10, 0))
+        child_frame.grid(row=self.question_count, column=0, pady=(10, 0), sticky="ew")
 
         # Create a text field for question input
         question_label = customtkinter.CTkLabel(child_frame, text="Enter Question:")
@@ -178,8 +177,20 @@ class ToplevelWindow(customtkinter.CTkToplevel):
         co_input.grid(row=1, column=5, padx=10, pady=5)
 
         # Create a 'Next' button for this child frame
-        next_button = customtkinter.CTkButton(child_frame, text="Next", command=self.add_question)
+        next_button = customtkinter.CTkButton(child_frame, text="Next", command=self.next_question)
         next_button.grid(row=2, column=0, columnspan=6, pady=10)
+
+    def next_question(self):
+        # Ensure that the current question frame is properly removed
+        for widget in self.scrollable_frame.winfo_children():
+            if isinstance(widget, customtkinter.CTkFrame):
+                # Check if the widget is a question frame and it is in the last added row
+                grid_info = widget.grid_info()
+                if "row" in grid_info and grid_info["row"] == self.question_count:
+                    widget.grid_forget()
+
+        # Show the next question input
+        self.show_question_input()
 
     def save_and_exit(self):
         self.master.deiconify()  # Restore the main window
@@ -188,6 +199,7 @@ class ToplevelWindow(customtkinter.CTkToplevel):
     def export_and_close(self):
         self.master.deiconify()  # Restore the main window
         self.destroy()
+
 
 
 # Right Frame Definition (Scrollable)
