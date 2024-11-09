@@ -14,38 +14,43 @@ print("========== COURSES.db PREVIEW =============")
 print(data_checker.main())
 print("========== PREVIEW END =============")
 
-SESSION, QUESTION_META = question_paper_setup.QuestionPaperSetup()
+from QuestFormater import question_docx_form
+question_docx_form.QuestionDOCX()
 
-print(SESSION)
-for questmeta in range(0,len(QUESTION_META)):
-    print(QUESTION_META[questmeta])
-    
-now = datetime.now()
+# SESSION, QUESTION_META = question_paper_setup.QuestionPaperSetup()
 
-QUESTION_RUNNING = True
-QUESTION_TITLE = str(now)
-print("=======================")
-print(QUESTION_TITLE)
-print("=======================")
-# QUESTION_PARAMETERS = {"quiz":20,"mid_semester":50,"end_semester":100}
-PAPER_WEIGHT = 0
+# print(SESSION)
+# for questmeta in range(0,len(QUESTION_META)):
+#     print(QUESTION_META[questmeta])
+    
+# now = datetime.now()
 
-while QUESTION_RUNNING:
-    print("GIMME some questions! 🗣️  🗣️  🗣️")
-    print(f"Here's the QID's data type : {type(QUESTION_TITLE)}")
-    print("==================")
-    questions_.QuestionManipulator.QuestionAdd(QUESTION_TITLE)
-    # PAPER_WEIGHT += 1
+# QUESTION_RUNNING = True
+# QUESTION_TITLE = str(now)
+# print("=======================")
+# print(QUESTION_TITLE)
+# print("=======================")
+# # QUESTION_PARAMETERS = {"quiz":20,"mid_semester":50,"end_semester":100}
+# PAPER_WEIGHT = 0
+
+# while QUESTION_RUNNING:
+#     print("GIMME some questions! 🗣️  🗣️  🗣️")
+#     print(f"Here's the QID's data type : {type(QUESTION_TITLE)}")
+#     print("==================")
+#     questions_.QuestionManipulator.QuestionAdd(QUESTION_TITLE)
+#     # PAPER_WEIGHT += 1
     
-    print("==================")
+#     print("==================")
     
-    user_option = input("Do you want to add another question? Y/N: ")
-    if user_option.lower() == "y":
-        pass
-    else:
-        question_quit.quitting_safe()
-        QUESTION_RUNNING = False
+#     user_option = input("Do you want to add another question? Y/N: ")
+#     if user_option.lower() == "y":
+#         pass
+#     else:
+#         question_quit.quitting_safe()
+#         QUESTION_RUNNING = False
         
+        # ================================================================ 
+
 #     QUESTION_BANK = questions_.QuestionAdd(QUESTION_BANK,QUESTION)
 #     question_mark_list = []
     
