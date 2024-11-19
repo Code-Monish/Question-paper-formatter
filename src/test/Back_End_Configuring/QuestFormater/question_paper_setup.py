@@ -2,7 +2,7 @@
 
 import sqlite3
 import os
-
+ 
 db_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../db/COURSES.db'))
 # Connect to the SQLite database (creates it if it doesn't exist)
 conn = sqlite3.connect(db_path)

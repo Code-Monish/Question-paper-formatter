@@ -1,7 +1,8 @@
 from QuestFormater import question_paper_setup
 from QuestFormater import questions_
 from QuestFormater import question_quit
-from QuestFormater import data_checker
+from QuestFormater import data_checker # This is just for development
+from QuestFormater import question_docx_form
 
 from datetime import datetime
 import sqlite3
@@ -12,7 +13,7 @@ cursor = conn.cursor()
 print("My main is running!")
 print("========== COURSES.db PREVIEW =============")
 print(data_checker.main())
-print("========== PREVIEW END =============")
+print("========== PuREVIEW END =============")
 
 from QuestFormater import question_docx_form
 question_docx_form.QuestionDOCX()

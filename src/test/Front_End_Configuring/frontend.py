@@ -200,8 +200,6 @@ class ToplevelWindow(customtkinter.CTkToplevel):
         self.master.deiconify()  # Restore the main window
         self.destroy()
 
-
-
 # Right Frame Definition (Scrollable)
 class RightFrame(customtkinter.CTkScrollableFrame):
     def __init__(self, master):

@@ -18,8 +18,6 @@ def QuestionDOCX():
         # Add question
         p = doc.add_paragraph()
         p.add_run(question).bold = True
-        # doc.add_page_break()
-        # doc.add_section()
         # Add marks, BTL, and CO to the right of the question
         p.add_run(f' (Marks: {marks}, BTL: {btl}, CO: {co})')
 
