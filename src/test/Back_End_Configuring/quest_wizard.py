@@ -4,19 +4,24 @@ from QuestFormater import question_quit
 from QuestFormater import data_checker # This is just for development
 from QuestFormater import question_docx_form
 
-from datetime import datetime
 import sqlite3
 
 conn = sqlite3.connect("db/COURSES.db")
 cursor = conn.cursor()
 
+from datetime import datetime
+file_name = datetime.now()
+print(file_name)
+
 print("My main is running!")
 print("========== COURSES.db PREVIEW =============")
 print(data_checker.main())
+# questions_.QuestionManipulator.QuestionAdd(file_name)
 print("========== PuREVIEW END =============")
 
-from QuestFormater import question_docx_form
-question_docx_form.QuestionDOCX()
+# TODO : Make the github and db integration.
+
+# question_docx_form.QuestionDOCX()
 
 # SESSION, QUESTION_META = question_paper_setup.QuestionPaperSetup()
 

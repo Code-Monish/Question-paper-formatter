@@ -42,5 +42,5 @@ poetry.lock
 
 # Miscellaneous
 *.sqlite3
-*.db
+COURSES.db
 *.dat

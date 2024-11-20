@@ -1,5 +1,31 @@
 import customtkinter
 from PIL import Image
+import os
+import sys
+
+# Get current script's directory
+current_script_dir = os.path.dirname(os.path.abspath(__file__))
+print("Current Script Directory:", current_script_dir)
+
+# Get parent directory
+parent_dir = os.path.abspath(os.path.join(current_script_dir, '..'))
+print("Parent Directory:", parent_dir)
+
+# Construct library path
+lib_path = os.path.join(parent_dir, 'Back_End_Configuring', 'QuestFormater')
+print("Library Location:", lib_path)
+
+# Check if directory exists
+print("Library Path Exists:", os.path.exists(lib_path))
+
+# List contents of the directory
+print("Directory Contents:", os.listdir(lib_path))
+
+# Check Python path
+print("Python Path:", sys.path)
+# QuestFomater.ok()
+
+# import QuestFormater from Back_End_Configuring
 
 # Header Frame Definition
 class HeaderFrame(customtkinter.CTkFrame):
@@ -246,5 +272,5 @@ class App(customtkinter.CTk):
         self.right_frame = RightFrame(self.content_frame)
         self.right_frame.grid(row=0, column=1, padx=10, pady=10, sticky="nsew")
 
-app = App()
-app.mainloop()
+# app = App()
+# app.mainloop()

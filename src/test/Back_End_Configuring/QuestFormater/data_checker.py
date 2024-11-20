@@ -20,7 +20,7 @@ class DataChecker:
         columns = [info[1] for info in cursor.fetchall()]
         print(f"Column names for table {table_name}: {', '.join(columns)}")
 
-        cursor.execute(f"SELECT * FROM {table_name} LIMIT 5;")
+        cursor.execute(f"SELECT * FROM {table_name} LIMIT 10;")
         rows = cursor.fetchall()
         print(f"Top 5 rows from table {table_name}:")
         for row in rows:
