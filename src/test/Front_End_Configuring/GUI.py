@@ -178,7 +178,7 @@ class QuestionPaperApp(customtkinter.CTk):
                 command=btn_command if btn_command else None
             )
             btn.pack(pady=5, padx=10, fill="x")
-
+        
     def _create_main_content(self):
         """Create the main content area with question input and preview"""
         # Main content frame
@@ -201,14 +201,15 @@ class QuestionPaperApp(customtkinter.CTk):
         input_title.pack(pady=(10, 20))
 
         # Scrollable input area
-        input_scroll = customtkinter.CTkScrollableFrame(input_frame)
-        input_scroll.pack(expand=True, fill="both", padx=10, pady=10)
+        self.input_scroll = customtkinter.CTkScrollableFrame(input_frame)
+        self.input_scroll.pack(expand=True, fill="both", padx=10, pady=10)
 
         # Add Question Button
         add_question_btn = customtkinter.CTkButton(
-            input_scroll, 
+            self.input_scroll, 
             text="➕ Add New Question", 
-            corner_radius=5
+            corner_radius=5,
+            command=self._add_question_prompt
         )
         add_question_btn.pack(pady=10, fill="x")
 
@@ -219,6 +220,127 @@ class QuestionPaperApp(customtkinter.CTk):
         # Create DOCX preview widget
         self.docx_preview = DocxPreviewWidget(preview_frame, self.docx_path)
         self.docx_preview.pack(expand=True, fill="both", padx=5, pady=5)
+        
+        # Initialize a list to keep track of question entries
+        self.question_entries = []
+        
+    def _add_question_prompt(self):
+        """Add a new detailed question input form"""
+        # Create a frame for the entire question input
+        question_frame = customtkinter.CTkFrame(self.input_scroll)
+        question_frame.pack(pady=10, fill="x")
+
+        # Question number label
+        question_number = len(self.question_entries) + 1
+        question_label = customtkinter.CTkLabel(
+            question_frame, 
+            text=f"Question {question_number}", 
+            font=("Arial", 14, "bold")
+        )
+        question_label.pack(pady=(10, 5))
+
+        # Question input
+        question_input_label = customtkinter.CTkLabel(question_frame, text="Question:")
+        question_input_label.pack()
+        question_entry = customtkinter.CTkEntry(
+            question_frame, 
+            placeholder_text="Enter your question here",
+            width=400
+        )
+        question_entry.pack(pady=(0, 10), padx=20)
+
+        # Marks input
+        marks_frame = customtkinter.CTkFrame(question_frame, fg_color="transparent")
+        marks_frame.pack(pady=5)
+
+        marks_label = customtkinter.CTkLabel(marks_frame, text="Marks:")
+        marks_label.pack(side="left", padx=(0, 10))
+        marks_entry = customtkinter.CTkEntry(
+            marks_frame, 
+            placeholder_text="Marks", 
+            width=100
+        )
+        marks_entry.pack(side="left", padx=5)
+
+        # BTL input
+        btl_label = customtkinter.CTkLabel(marks_frame, text="BTL:")
+        btl_label.pack(side="left", padx=(20, 10))
+        btl_entry = customtkinter.CTkEntry(
+            marks_frame, 
+            placeholder_text="BTL", 
+            width=100
+        )
+        btl_entry.pack(side="left", padx=5)
+
+        # CO input
+        co_label = customtkinter.CTkLabel(marks_frame, text="CO:")
+        co_label.pack(side="left", padx=(20, 10))
+        co_entry = customtkinter.CTkEntry(
+            marks_frame, 
+            placeholder_text="CO", 
+            width=100
+        )
+        co_entry.pack(side="left", padx=5)
+
+        # Next button to add another question
+        next_button = customtkinter.CTkButton(
+            question_frame, 
+            text="Next Question", 
+            command=lambda: self._process_and_add_next_question(
+                question_entry, marks_entry, btl_entry, co_entry, question_frame
+            )
+        )
+        next_button.pack(pady=10)
+
+        # Store the entries in the question entries list
+        self.question_entries.append({
+            'question': question_entry,
+            'marks': marks_entry,
+            'btl': btl_entry,
+            'co': co_entry
+        })
+
+        # Hide the original "Add Question" button after first question
+        if len(self.question_entries) == 1:
+            # Assuming the add question button is the last widget in the input_frame
+            for widget in self.input_frame.winfo_children():
+                if isinstance(widget, customtkinter.CTkButton):
+                    widget.pack_forget()
+    
+    def _process_and_add_next_question(self, current_question_entry, marks_entry, btl_entry, co_entry, current_frame):
+        """Process the current question and add a new question prompt"""
+        # Validate inputs
+        if not current_question_entry.get().strip():
+            # Create an error label
+            error_label = customtkinter.CTkLabel(
+                current_frame, 
+                text="Please enter a question.", 
+                text_color="red"
+            )
+            error_label.pack(pady=5)
+
+            # Optional: Remove the error label after a few seconds
+            current_frame.after(3000, error_label.destroy)
+            return
+
+        # Validate marks (ensure it's a number)
+        try:
+            marks = float(marks_entry.get())
+        except ValueError:
+            error_label = customtkinter.CTkLabel(
+                current_frame, 
+                text="Marks must be a number.", 
+                text_color="red"
+            )
+            error_label.pack(pady=5)
+            current_frame.after(3000, error_label.destroy)
+            return
+
+        # Optional: You might want to store the question details
+        # For now, we'll just clear the current frame and add a new question
+        current_frame.pack_forget()  # Hide the current question frame
+        self._add_question_prompt()  # Add a new question prompt
+
 
     def _create_footer(self):
         """Create a footer with status and quick actions"""
