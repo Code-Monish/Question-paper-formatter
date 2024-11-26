@@ -4,6 +4,7 @@ import io
 import sys
 import platform
 import subprocess
+import sqlite3
 
 # Tkinter and CustomTkinter Imports
 import tkinter as tk
@@ -25,9 +26,6 @@ parent_dir = os.path.abspath(os.path.join(current_script_dir, '..'))
 lib_path = os.path.join(parent_dir, 'Back_End_Configuring', 'QuestFormater')
 sys.path.insert(0, lib_path)
 
-# Try importing specific modules
-# from questions_ import YourSpecificFunction
-# or
 import questions_
 
 class DocxPreviewWidget(customtkinter.CTkFrame):
@@ -341,6 +339,21 @@ class QuestionPaperApp(customtkinter.CTk):
         current_frame.pack_forget()  # Hide the current question frame
         self._add_question_prompt()  # Add a new question prompt
 
+        # Save question to database
+        question = current_question_entry.get()
+        question_weight = marks_entry.get()
+        question_BTL = btl_entry.get()
+        question_CO = co_entry.get()
+        questions_.QuestionManipulator.QuestionAdd(question, question_weight, question_BTL, question_CO)
+
+    def _save_question(self):
+        question = self.question_entry.get()
+        question_weight = self.question_weight_entry.get()
+        question_BTL = self.question_BTL_entry.get()
+        question_CO = self.question_CO_entry.get()
+
+        # Call the QuestionAdd method from the questions_ module
+        questions_.QuestionManipulator.QuestionAdd(question, question_weight, question_BTL, question_CO)
 
     def _create_footer(self):
         """Create a footer with status and quick actions"""

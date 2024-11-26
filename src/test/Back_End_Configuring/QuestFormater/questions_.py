@@ -14,40 +14,32 @@ class QuestionManipulator:
 
     @staticmethod
     def connect_db():
+        db_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'db/COURSES.db'))
         return sqlite3.connect(db_path)
 
     @staticmethod
-    def QuestionAdd(QID):
+    def QuestionAdd(question, question_weight, question_BTL, question_CO):
         try:
-            question_file = str(QID)
-            question = input("Enter the question here: ")
-            question_weight = int(input("Enter the mark it holds: "))
-            question_BTL = input("Enter BLT: ")
-            question_CO = input("Enter CO: ")
-
             with QuestionManipulator.connect_db() as conn:
                 cursor = conn.cursor()
                 cursor.execute("""
                     CREATE TABLE IF NOT EXISTS Questions (
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
-                        file TEXT NOT NULL,
                         Question TEXT NOT NULL,
                         Marks INTEGER NOT NULL,
                         BTL TEXT NOT NULL,
                         CO TEXT NOT NULL
                     )
                 """)
-
                 cursor.execute("""
-                    INSERT INTO Questions (file, Question, Marks, BTL, CO)
-                    VALUES (?, ?, ?, ?, ?)
-                """, (question_file, question, question_weight, question_BTL, question_CO))
+                    INSERT INTO Questions (Question, Marks, BTL, CO)
+                    VALUES (?, ?, ?, ?)
+                """, (question, question_weight, question_BTL, question_CO))
                 print("Question added successfully.")
-
         except sqlite3.Error as e:
-            print(f"SQLite error: {e}")
+            print(f"An error occurred: {e}")
         except ValueError:
-            print("There was some value error")
+            print("Invalid input. Please enter the correct data types.")
 
     @staticmethod
     def QuestionDelete():
