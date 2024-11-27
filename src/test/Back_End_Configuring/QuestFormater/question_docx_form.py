@@ -39,6 +39,7 @@ def QuestionDOCX():
         print(full_file_path)
         # Save the document
         doc.save(full_file_path)
+        
 
         print(f"Document created successfully at: {full_file_path}")
         conn.close()
@@ -48,3 +49,4 @@ def QuestionDOCX():
         # Optional: log the error or handle it appropriately
         if conn:
             conn.close()
+
